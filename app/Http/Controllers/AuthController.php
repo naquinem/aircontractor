@@ -51,6 +51,7 @@ class AuthController extends Controller {
 
         return response()->json([
             'user' => new UserResource($user),
+            'token' => $token,
         ])->withCookie($cookie);
     }
 
@@ -79,19 +80,23 @@ class AuthController extends Controller {
     public function schedule(ScheduleRequest $request) {
 
         $data = $request->validated();
+        if($data){
+            $user = Schedule::create([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'message' => $data['message'],
+            ]);
 
-        $user = Schedule::create([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email'],
-            'message' => $data['message'],
-        ]);
+            return response()->json([
+                'user' => $user,
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Failed to submit request"
+            ]);
+        }
 
-        $token = $user->createToken('schedule')->plainTextToken;
-        $cookie = cookie('token', $token, 60 * 24);
-
-        return response()->json([
-            'user' => new ScheduleResource($user),
-        ]);
     }
+
 }

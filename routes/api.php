@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/token', [AuthController::class, 'token']);
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/schedule', [AuthController::class, 'schedule']);
+    Route::post('/customers', [CustomerController::class, 'store']);
 });
+
+Route::get('/review', [CustomerController::class, 'index']);

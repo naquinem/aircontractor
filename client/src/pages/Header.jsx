@@ -12,7 +12,7 @@ const navigation = [
 	{ name: 'Contact Us', href: '/contact' },
 
   ]
-  
+
   function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
   }
@@ -29,10 +29,9 @@ export default function Header() {
 			} catch (error) {
 				if (error.response.status === 401) {
 					localStorage.removeItem('user');
-					
 				}
 			}
-		})();
+		});
 	}, []);
 
     const handleLogout = async () => {
@@ -151,7 +150,7 @@ export default function Header() {
 				</Disclosure.Panel>
 				</>
 			)}
-		</Disclosure>  
+		</Disclosure>
     </div>
   )
 }

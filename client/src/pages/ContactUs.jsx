@@ -1,8 +1,9 @@
 import axios from '../axios';
 import { useAuth } from '../contexts/AuthContext';
+import {useNavigate} from 'react-router-dom'
 
 export default function ContactUs() {
-
+    const navigate = useNavigate();
     const {csrfToken} = useAuth();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,13 +18,14 @@ export default function ContactUs() {
         try {
             const resp = await axios.post('/schedule', body);
             if (resp.status === 200) {
-                console.log(resp.data);
-                return <Navigate to="/profile" />
+                navigate("/profile");
             }
         }
         catch (error) {
-            if (error.response.status === 401);
-           console.log(error.response.data.message);
+            if (error.resp.status === 401){
+                console.log(error.res.data.message);
+            }
+
         }
     }
   return (
@@ -34,7 +36,6 @@ export default function ContactUs() {
 		  <hr className="bg-slate-400 h-1 w-full my-4" />
       <div className="space-y-4 md:space-y-6">
         <form
-          action="#"
           method="post"
           onSubmit={handleSubmit}
         >
@@ -93,7 +94,7 @@ export default function ContactUs() {
             type="submit"
             className="w-55 mt-5 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
             Submit
-          </button>	
+          </button>
         </form>
       </div>
     </div>
